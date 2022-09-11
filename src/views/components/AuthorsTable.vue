@@ -11,6 +11,7 @@
               <th class="text-uppercase font-weight-bolder opacity-7">Avatar</th>
               <th class="text-uppercase font-weight-bolder opacity-7">Name</th>
               <th class="text-uppercase font-weight-bolder opacity-7">Email</th>
+              <th class="text-uppercase font-weight-bolder opacity-7">Action</th>
             </tr>
           </thead>
           <tbody v-if="get && get.length">
@@ -23,6 +24,9 @@
               </td>
               <td>
                 <h5 class="font-weight-bold mb-0">{{get.email}}</h5>
+              </td>
+              <td>
+                <button @click="deleteUser" class="btn btn-danger mt-3">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -46,6 +50,19 @@ export default {
       .then(response => {
         this.get = response.data.data
       })
-  }
+  },
+
+  methods: {
+      async deleteUser() {
+          let x = window.confirm("You want to delete the user?");
+          if (x) {
+              const user = await axios.delete(
+                  "https://reqres.in/api/users/2"
+              );
+              console.log(user);
+              alert("User deleted!");
+          }
+      },
+    },
 }
 </script> 
